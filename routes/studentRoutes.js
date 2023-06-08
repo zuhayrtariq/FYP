@@ -31,6 +31,7 @@ router.get('/viewmarks', studentControllers.showViewMarksPage);
 router.get('/fees', studentControllers.showFees);
 router.get('/roadmap', studentControllers.showRoadMap);
 router.get('/coursecatalog', studentControllers.showCourseCatalog);
+router.get('/courseplan', studentControllers.showCoursePlan);
 router.get('/studentprofile', studentControllers.showStudentProfile);
 router.post('/registercourse', studentControllers.studentRegisterCourse);
 router.post('/unregistercourse', studentControllers.studentUnRegisterCourse);

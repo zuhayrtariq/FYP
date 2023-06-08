@@ -5,7 +5,7 @@
     <div class="card">
         <div class="table-responsive">
           <table class="table align-items-center mb-0 e table-group-divider">
-            <thead class=" text-dark">
+            <thead class=" text-bg-success bg-success">
               <tr class="align-middle text-center">
                
                 <th class="text-uppercase text-sm font-weight-bolder opacity-7">Course Title</th>
@@ -19,37 +19,47 @@
               </tr>
             </thead>
             <tbody id="myTable">
-              <tr class="align-middle text-center text-sm">
+
+              <% allData.forEach(x => { %>
+                <tr class="align-middle text-center text-sm">
 
                   <td>
                   
                       
                       <div class="d-flex flex-column justify-content-center px-2 py-2">
-                        <h6 class="mb-0 text-sm ">Artificial Intelligence Lab</h6>
-                        <p class="text-xs text-secondary mb-0">CSC312</p>
+                        <h6 class="mb-0 text-sm "> <%= x.course_title %> </h6>
+                        <p class="text-xs text-secondary mb-0"><%= x.course_code %></p>
                       </div>
                   
                   </td>
                   <td>
-                    <p class="text-sm font-weight-bold mb-0">FALL 22</p>
+                    <p class="text-sm font-weight-bold mb-0"><%= x.semester %></p>
+                   
+                  </td>
+                  
+                  <td>
+                    
+                    <% if (!x.grade) { %>
+                      <p class="text-sm font-weight-bold mb-0">TBD</p>
+                    <% }else{ %>
+                    <p class="text-sm font-weight-bold mb-0"><%= x.grade %></p>
+                    <% }%>
+                  </td>
+                  <td>
+                    <p class="text-sm font-weight-bold mb-0"><%= x.section_code %></p>
                    
                   </td>
                   <td>
-                    <p class="text-sm font-weight-bold mb-0">A</p>
-                   
-                  </td>
-                  <td>
-                    <p class="text-sm font-weight-bold mb-0">M-10001</p>
-                   
-                  </td>
-                  <td>
-                    <p class="text-sm font-weight-bold mb-0">Dr Asghar Kan</p>
+                    <p class="text-sm font-weight-bold mb-0"><%= x.faculty_name %></p>
                    
                   </td>
                  
                   
                 </tr>
           
+              <% }) %>
+
+             
             </tbody>
           </table>
         </div>

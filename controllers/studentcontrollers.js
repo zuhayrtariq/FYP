@@ -426,6 +426,38 @@ const showCourseCatalog = async (req, res) => {
 };
 const showRoadMap = async (req, res) => {
   console.log('Student RoadMap Route!!!');
+  const courseCatalog = await studentModels.getCourseCatalog(globalProgramID);
+
+  const coursesPassed = await studentModels.getCoursesPassed(globalStudentId);
+  console.log(coursesPassed);
+
+  for (let i = 0; i < courseCatalog.length; i++) {
+    if (coursesPassed.includes(courseCatalog[i].course_code)) {
+      courseCatalog[i].status = 'Passed';
+    }
+
+    if (courseCatalog[i].course_prerequisite) {
+      if (coursesPassed.includes(courseCatalog[i].course_prerequisite)) {
+        courseCatalog[i].course_prerequisite_status = 'Completed';
+        courseCatalog[i].status = 'ETR';
+      } else {
+        courseCatalog[i].course_prerequisite_status = 'Not Completed';
+        courseCatalog[i].status = 'NETR';
+      }
+    } else if (!coursesPassed.includes(courseCatalog[i].course_code)) {
+      courseCatalog[i].status = 'ETR';
+    }
+  }
+
+  res.render('studentRoadMap', {
+    page_name: 'roadmap',
+    firstname: globalFirstname,
+    lastname: globalLastname,
+    allData: courseCatalog,
+  });
+};
+const showCoursePlan = async (req, res) => {
+  console.log('Student RoadMap Route!!!');
   const sectionCodes = await studentModels.getStudentSectionCodes(
     globalStudentId
   );
@@ -446,8 +478,8 @@ const showRoadMap = async (req, res) => {
 
   console.log(allData);
   console.log(sectionCodes);
-  res.render('studentRoadMap', {
-    page_name: 'roadmap',
+  res.render('studentCoursePlan', {
+    page_name: 'courseplan',
     firstname: globalFirstname,
     lastname: globalLastname,
     allData,
@@ -676,4 +708,5 @@ module.exports = {
   studentUnRegisterCourse,
   studentAddBalance,
   AddAmountInAccount,
+  showCoursePlan,
 };
