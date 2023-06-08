@@ -1,7 +1,9 @@
 :root {
   --custom1: #a28089;
 }
-
+.dropdown-menu {
+  visibility: collapse;
+}
 .z-card {
   border: none;
   padding: 0 !important;

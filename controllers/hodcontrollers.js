@@ -336,17 +336,11 @@ const getSectionsToLock = async (req, res) => {
     inProgSecData,
   });
 };
-
-const viewMarks = async (req, res) => {
-  let { sectionCode } = req.query;
-  console.log(
-    'View Marks Request For Locking Grade Section Code : ',
-    sectionCode
-  );
+async function getResult(sectionCode) {
   let { marksType, totalMarks } = await facultyModels.getMarksType(sectionCode);
   console.log(marksType, totalMarks);
   let allSectionData = await facultyModels.getSectionMarks(sectionCode);
-
+  console.log('THIS IS ALL ', allSectionData);
   let tmarks, grade, gpa;
   for (let i = 0; i < allSectionData.length; i++) {
     tmarks = 0;
@@ -361,7 +355,18 @@ const viewMarks = async (req, res) => {
     allSectionData[i].grade = grade;
     allSectionData[i].gpa = gpa;
   }
+  return { allSectionData, totalMarks, marksType };
+}
+const viewMarks = async (req, res) => {
+  let { sectionCode } = req.query;
 
+  const { marksType, totalMarks, allSectionData } = await getResult(
+    sectionCode
+  );
+  console.log(
+    'View Marks Request For Locking Grade Section Code : ',
+    sectionCode
+  );
   console.log(allSectionData);
   res.render('hodViewMarks', {
     page_name: 'viewmarks',
@@ -375,10 +380,12 @@ const viewMarks = async (req, res) => {
 };
 const lockGrade = async (req, res) => {
   const { sectionCode, status } = req.body;
-
+  console.log(await facultyModels.getSectionMarks(sectionCode));
   console.log('Faculty Lock Grade');
   if (status == '1') {
     await hodModels.hodGradeLock(sectionCode);
+    const { allSectionData } = await getResult(sectionCode);
+    await hodModels.saveStudentGrade(sectionCode, allSectionData);
   } else if (status == '2') {
     await hodModels.hodGradeUnlock(sectionCode);
   }

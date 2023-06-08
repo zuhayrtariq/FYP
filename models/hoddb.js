@@ -205,7 +205,21 @@ async function allotFaculty(facultyID, sectionCode) {
     [facultyID, sectionCode]
   );
 }
+async function saveStudentGrade(sectionCode, marksDetails) {
+  for (let i = 0; i < marksDetails.length; i++) {
+    await pool.query(
+      `UPDATE student_section_details SET grade = ? WHERE student_section_details.student_id = ? AND student_section_details.section_code = ?;
 
+    `,
+      [marksDetails[i].grade, marksDetails[i].student_id, sectionCode]
+    );
+  }
+  await pool.query(
+    `UPDATE section_details SET hod_lock = '1' WHERE section_details.section_code = ?;
+  `,
+    [sectionCode]
+  );
+}
 async function hodGradeLock(sectionCode) {
   await pool.query(
     `UPDATE section_details SET hod_lock = '1' WHERE section_details.section_code = ?;
@@ -243,4 +257,5 @@ module.exports = {
   getAllDepartmentFacultyIDs,
   getSemesterID,
   sectionsWithoutFaculty,
+  saveStudentGrade,
 };

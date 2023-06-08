@@ -129,13 +129,13 @@
                 </div>
               </a>
             </li>
-            <div class="dropdown d-none d-lg-block">
+            <div class="dropdown  ">
               <button class="btn btn-light text-primary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline font-weight-bolder px-0"
+                <span class="mr-2  d-none d-sm-inline font-weight-bolder px-0"
                   >  <%= firstname %> <%= lastname %></span
                 > <i class="fa fa-cog  cursor-pointer"></i>
               </button>
-              <ul class="dropdown-menu  " aria-labelledby="dropdownMenuButton" style="margin-top: 10px !important; ">
+              <ul class="dropdown-menu position-absolute " aria-labelledby="dropdownMenuButton" style="margin-top: 10px !important; top: 40px; ">
                 <li><a class="dropdown-item" href="./studentprofile">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
@@ -165,30 +165,7 @@
         </div>
       </div>
     </nav>
-      <div class="dropup d-lg-none position-absolute bottom-0 z-index-sticky "  >
-      <button class="btn btn-light text-primary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fa fa-cog  cursor-pointer"></i>
-      </button>
-      <ul class="dropdown-menu position-absolute  bottom-0 end-5 " aria-labelledby="dropdownMenuButton" style="margin-top: 10px !important; ">
-        <li><a class="dropdown-item" href="#">
-          <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-          Profile
-        </a></li>
-        <li><a class="dropdown-item" href="#">
-          <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-          Settings
-        </a></li>
-        <li> <a
-          class="dropdown-item"
-          href="#"
-          data-toggle="modal"
-          data-target="#logoutModal">
-          <i
-            class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-          Logout
-        </a></li>
-      </ul>
-    </div>
+    
   
     <!-- End Navbar -->
  

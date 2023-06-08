@@ -68,7 +68,12 @@
                         <td><p class="text-sm font-weight-bold mb-0"><%= x[y]  %></p></td> 
                       <% }) %>
                       <td><p class="text-sm text-dark font-weight-bolder mb-0"><%= x.totalmarks  %></p></td> 
-                      <td><p class="text-sm text-dark font-weight-bolder mb-0"><%= x.grade  %></p></td> 
+
+                      <% if (x.grade == 'F') { %>
+                        <td><p class="text-sm text-dark font-weight-bolder mb-0 bg-danger"><%= x.grade  %></p></td> 
+                      <% }else{ %>
+                        <td><p class="text-sm text-dark font-weight-bolder mb-0 bg-success"><%= x.grade  %></p></td> 
+                        <% } %>
                       <td><p class="text-sm text-dark font-weight-bolder mb-0"><%= x.gpa  %></p></td> 
                      
                       

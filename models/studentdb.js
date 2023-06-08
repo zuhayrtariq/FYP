@@ -1,5 +1,5 @@
 const pool = require('../connection');
-
+const moment = require('moment');
 //Student Details
 async function studentLogIn(username, password) {
   const [result] = await pool.query(
@@ -188,6 +188,10 @@ async function getAttendance(studentID, sectionCode) {
     `SELECT * FROM attendance WHERE student_id = ? AND section_code = ?`,
     [studentID, sectionCode]
   );
+  console.log('RESULT IS ', result);
+  result.forEach((x) => {
+    x.date = moment(x.date).format('DD-MM-YYYY');
+  });
   return result;
 }
 
