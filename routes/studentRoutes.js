@@ -28,6 +28,8 @@ router.get('/timetable', studentControllers.showTimetablePage);
 router.get('/addcourse', studentControllers.showAddCoursePage);
 router.get('/dropcourse', studentControllers.showDropCoursePage);
 router.get('/viewmarks', studentControllers.showViewMarksPage);
+router.get('/semesterresult', studentControllers.getSemesterResult);
+router.post('/semesterresult', studentControllers.showSemesterResult);
 router.get('/fees', studentControllers.showFees);
 router.get('/roadmap', studentControllers.showRoadMap);
 router.get('/coursecatalog', studentControllers.showCourseCatalog);

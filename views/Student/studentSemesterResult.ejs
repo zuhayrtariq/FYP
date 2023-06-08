@@ -1,0 +1,33 @@
+<%- include('partials/studenthead') %>
+<div class="container-fluid py-4 min-vh-100">
+    <form action="./semesterresult" method="post">
+     
+      <button class="btn btn-block disabled btn-github text-white text-md text-dark fw-bolder  mb-0">Session</button>
+      <div class="dropdown">
+      
+        <button class="btn btn-block btn-white dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          <% if (!locals.selectedSemester) { %>
+          Select Semester
+          <% }else{ %>
+              <%= selectedSemester  %> 
+            <% }%>
+        </button>
+        <ul class="dropdown-menu d-block w-100 text-center" aria-labelledby="dropdownMenuButton">
+          <% semesters.forEach(x => { %>
+            <li><button class="dropdown-item fw-bolder " value="<%= x %>" name="selectedSemester"> <%= x %> </button></li>
+          
+          <% }) %>
+        
+        </ul>
+      </div>
+    
+     
+
+  </form>
+
+  
+  
+
+  
+  
+<%- include('partials/footer') %>

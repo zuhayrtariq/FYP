@@ -1,0 +1,82 @@
+<%- include('partials/studenthead') %>
+<div class="container-fluid py-4 min-vh-100">
+
+    
+    <div class="table-responsive mt-3 rounded ">
+       
+      <table class="table align-items-center mb-0 table-responsive-sm table-group-divider ">
+        <thead class="text-bg-info">
+            <tr class="align-middle text-center">           
+               
+                <th class="text-uppercase text-lg font-weight-bolder bg-gradient-faded-light text-dark " colspan='4' ><%= semesterName %> </th>
+              </tr>
+          <tr class="align-middle text-center">           
+            <th class="text-uppercase text-md font-weight-bolder bg-dark text-white " >Section Code</th>
+            <th class="text-uppercase text-md font-weight-bolder  bg-dark text-white" >Course Title </th>
+            <th class="text-uppercase text-md font-weight-bolder bg-dark text-white " >Course Code</th>
+            <th class="text-uppercase text-md font-weight-bolder bg-dark text-white " >Grade</th>
+          </tr>
+         
+          
+        </thead>
+        <tbody class="bg-gray-100 text-bg-white ">
+          
+        
+            <% allData.forEach(x => { %>
+             
+           
+
+            <tr class="align-middle text-center text-sm ">
+              <td>
+                <p class="text-sm font-weight-bold mb-0"> <%= x.section_code  %> </p>
+               
+              </td>
+              <td>
+                <p class="text-sm font-weight-bold mb-0"> <%= x.course_title  %> </p>
+               
+              </td>
+              <td>
+                <p class="text-sm font-weight-bolder mb-0 "><%= x.course_code  %></p>
+               
+              </td><td>
+                <% if (x.grade) { %>
+                    <p class="text-sm font-weight-bolder mb-0 text-primary"><%= x.grade  %></p>
+                    <% } else{%>  
+                        <p class="text-sm font-weight-bolder mb-0 "> --- </p> <% } %>
+                
+               
+              </td>
+          </tr>
+        
+          <% }) %>
+         
+  
+            
+             
+          
+            
+        
+            
+        </tbody>
+      </table>
+      
+      <% if (semesterGPA) { %>
+        <div class="text-center  mt-2">
+        <span class="badge fs-6 badge-pill badge-lg badge-warning">Semester GPA : <%=semesterGPA  %> </span>
+        </div>
+      <% } %>
+
+      <div class="text-end mr-2 mt-2">
+
+        
+
+        <a href="./semesterresult" class="btn btn-danger text-end mr-3">Return</a>
+       
+      </div>
+    </div>
+
+  
+
+  
+  
+<%- include('partials/footer') %>

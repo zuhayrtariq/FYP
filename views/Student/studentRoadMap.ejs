@@ -38,16 +38,22 @@
                   </td>
                   
                   <td>
+                    <% if (x.course_prerequisite) { %>
+                      <p class="text-sm font-weight-bold mb-0"><%= x.course_prerequisite%></p>
+                    <% } else{%>
+                      <p class="text-sm font-weight-bold mb-0">---</p>
+                      <% } %>
                     
-                   
-                      <p class="text-sm font-weight-bold mb-0"><%= x.course_prerequisite %></p>
+                     
                    
                   </td>
                   <td>
                     
                     <% if (x.course_prerequisite_status) { %>
                       <p class="text-sm font-weight-bold mb-0"><%= x.course_prerequisite_status%></p>
-                    <% }%>
+                    <% } else{%>
+                      <p class="text-sm font-weight-bold mb-0">---</p>
+                      <% } %>
                   </td>
                   <td>
                     <p class="text-sm font-weight-bold mb-0"><%= x.status %></p>

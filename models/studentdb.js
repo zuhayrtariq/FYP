@@ -79,6 +79,21 @@ async function getStudentSectionCodes(studentID, status) {
   });
   return result;
 }
+
+async function getSectionsinSemester(studentID, semesterID) {
+  let result;
+  [result] = await pool.query(
+    ` SELECT student_section_details.*, section_details.*
+        FROM student_section_details
+        LEFT JOIN section_details ON student_section_details.section_code = section_details.section_code
+        WHERE student_id = ? AND section_details.semester_id IN (?)`,
+    [studentID, semesterID]
+  );
+  result = await result.map((x) => {
+    return x.section_code;
+  });
+  return result;
+}
 async function getMarksDetail(sectionCode, studentID) {
   sectionCode = sectionCode.replace('-', '');
 
@@ -352,7 +367,17 @@ async function getGrade(marks) {
   );
   return result[0].grade;
 }
+
+async function getGPA(grade) {
+  const [result] = await pool.query(
+    `SELECT * FROM grades WHERE grade = ? LIMIT 1
+  `,
+    [grade]
+  );
+  return result[0].score;
+}
 module.exports = {
+  getGPA,
   studentLogIn,
   getStudentDetails,
   getStudentSectionCodes,
@@ -383,4 +408,5 @@ module.exports = {
   getGrade,
   getStudentGrade,
   getFacultyName,
+  getSectionsinSemester,
 };

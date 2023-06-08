@@ -689,7 +689,99 @@ function mustBeLoggedIn(req, res, next) {
   });
 }
 
+async function getStudentSemesters() {
+  const sectionCodes = await studentModels.getStudentSectionCodes(
+    globalStudentId
+  );
+  let semester = [],
+    temp;
+  for (let i = 0; i < sectionCodes.length; i++) {
+    temp = await studentModels.getSectionDetails(sectionCodes[i]);
+    if (!semester.includes(temp.semester_id)) {
+      semester[i] = temp.semester_id;
+    }
+  }
+  for (let i = 0; i < semester.length; i++) {
+    semester[i] = await studentModels.getSemesterName(semester[i]);
+  }
+  return semester;
+}
+const showSemesterResult = async (req, res) => {
+  let { selectedSemester } = req.body;
+  const semesterID = await studentModels.getSemesterIDbyName(selectedSemester);
+  console.log(semesterID);
+  let allData = [];
+  const sectionCodes = await studentModels.getSectionsinSemester(
+    globalStudentId,
+    semesterID
+  );
+  console.log(sectionCodes);
+  let grade,
+    sectionData,
+    flag = 0;
+  for (let i = 0; i < sectionCodes.length; i++) {
+    grade = await studentModels.getStudentGrade(
+      sectionCodes[i],
+      globalStudentId
+    );
+    sectionData = await studentModels.getSectionDetails(sectionCodes[i]);
+    let temp = JSON.parse(JSON.stringify(sectionData));
+    allData.push(temp);
+    if (grade == null) {
+      flag = 1;
+    }
+    allData[i].grade = grade;
+  }
+  console.log(flag);
+  let creditHours = 0,
+    gpa = 0,
+    totalCreditHours = 0,
+    semesterGPA = 0;
+  if (!flag) {
+    let temp;
+    for (let i = 0; i < allData.length; i++) {
+      gpa = await studentModels.getGPA(allData[i].grade);
+      console.log('THIS IS GPA : ', gpa);
+      creditHours = allData[i].course_credithours;
+      creditHours = parseInt(creditHours);
+      console.log('THERE ARE CH : ', creditHours);
+      totalCreditHours = totalCreditHours + creditHours;
+      gpa = gpa * creditHours;
+      semesterGPA = semesterGPA + gpa;
+    }
+    console.log(totalCreditHours);
+    semesterGPA = semesterGPA / totalCreditHours;
+
+    semesterGPA = semesterGPA.toFixed(2);
+    console.log(semesterGPA);
+  }
+
+  const semesters = await getStudentSemesters();
+  console.log(semesters);
+  res.render('studentShowSemesterResult', {
+    page_name: 'semesterresult',
+    firstname: globalFirstname,
+    lastname: globalLastname,
+    semesters,
+    allData,
+    semesterName: selectedSemester,
+    semesterGPA,
+  });
+};
+const getSemesterResult = async (req, res) => {
+  const { selectedSemester } = req.query;
+  const semesters = await getStudentSemesters();
+  console.log(semesters);
+  res.render('studentSemesterResult', {
+    page_name: 'semesterresult',
+    firstname: globalFirstname,
+    lastname: globalLastname,
+    semesters,
+  });
+};
 module.exports = {
+  getSemesterResult,
+  showSemesterResult,
   showLoginPage,
   studentLogin,
   studentLogout,
