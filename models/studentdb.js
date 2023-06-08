@@ -117,6 +117,14 @@ async function getSectionDetails(sectionCode) {
   return result[0];
 }
 
+async function getStudentGrade(sectionCode, studentID) {
+  const [result] = await pool.query(
+    `SELECT grade from student_section_details WHERE student_id = ? and section_code = ?`,
+    [studentID, sectionCode]
+  );
+  return result[0].grade;
+}
+
 //GET COURSE DETAILS
 async function getCourseDetails(courseCode) {
   const [result] = await pool.query(
@@ -166,7 +174,14 @@ async function getFacultyDetails(facultyID) {
   );
   return result[0];
 }
-
+async function getFacultyName(facultyID) {
+  let [result] = await pool.query(
+    `SELECT faculty_firstname, faculty_lastname FROM faculty_details WHERE faculty_id = ?`,
+    [facultyID]
+  );
+  result = result[0].faculty_firstname + ' ' + result[0].faculty_lastname;
+  return result;
+}
 //STUDENT ENROLLED COURSES IN WHICH SEMESTERS
 async function getStudentSemesterDetails(studentID, semesterID) {
   let [result] = await pool.query(
@@ -366,4 +381,6 @@ module.exports = {
   getStudentBalance,
   getAttendanceData,
   getGrade,
+  getStudentGrade,
+  getFacultyName,
 };

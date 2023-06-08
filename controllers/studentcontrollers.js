@@ -426,11 +426,31 @@ const showCourseCatalog = async (req, res) => {
 };
 const showRoadMap = async (req, res) => {
   console.log('Student RoadMap Route!!!');
+  const sectionCodes = await studentModels.getStudentSectionCodes(
+    globalStudentId
+  );
+  const allData = [];
+  for (let i = 0; i < sectionCodes.length; i++) {
+    allData[i] = await studentModels.getSectionDetails(sectionCodes[i]);
+    allData[i].semester = await studentModels.getSemesterName(
+      allData[i].semester_id
+    );
+    allData[i].grade = await studentModels.getStudentGrade(
+      sectionCodes[i],
+      globalStudentId
+    );
+    allData[i].faculty_name = await studentModels.getFacultyName(
+      allData[i].faculty_id
+    );
+  }
 
+  console.log(allData);
+  console.log(sectionCodes);
   res.render('studentRoadMap', {
     page_name: 'roadmap',
     firstname: globalFirstname,
     lastname: globalLastname,
+    allData,
   });
 };
 const showFees = async (req, res) => {

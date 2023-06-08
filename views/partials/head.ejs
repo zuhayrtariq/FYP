@@ -66,8 +66,8 @@
 <!-- Include fusion theme -->
 <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
 
-<% if (locals.page_name && locals.accountBalance) { %>
-<% if (page_name === 'dashboard' && accountBalance) { %>
+<% if (locals.page_name && locals.attendanceData) { %>
+<% if (page_name === 'dashboard' && attendanceData ) { %>
   
   <script type="text/javascript">
     //STEP 2 - Chart Data
@@ -80,7 +80,7 @@
       return { 'label': x, 'value' : attendanceData[i]}
     });
 
-
+    
     //STEP 3 - Chart Configurations
     const chartConfig = {
     type: 'column3d',
